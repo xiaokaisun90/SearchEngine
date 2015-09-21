@@ -351,12 +351,17 @@ public class QryEval {
 						int docid = q.docIteratorGetMatch ();
 						double score = ((QrySop) q).getScore (model);
 						r.add (docid, score);
-
 						q.docIteratorAdvancePast (docid);
+						
 					}
 				}
 				if (q.getDisplayName().equalsIgnoreCase("#and")) {
-					
+					while (q.docIteratorHasMatchUnrankedAdd (model)) {
+						int docid = q.docIteratorGetMatch ();
+						double score = ((QrySop) q).getScore (model);
+						r.add (docid, score);
+						q.docIteratorAdvancePast (docid);
+					}
 				}
 			}
 
